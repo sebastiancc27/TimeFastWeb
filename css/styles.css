@@ -1,0 +1,208 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --color-primario: #3f6f99;
+    --color-secundario: #DF9251;
+    --color-terciario: #f9f2ec;
+    --color-highligh: #C5E2FF;
+    --color-text: #1C3246;
+}
+
+.timefast_header {
+    width: 100%;
+    height: auto;
+    background-color: var(--color-primario);
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.timefast_header_img {
+    width: 5%;
+}
+
+.timefast_header_p {
+    color: var(--color-secundario);
+    font-size: 1.6em;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.envio_container_title {
+    width: 14%;
+    background-color: var(--color-terciario);
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-evenly;
+    align-items: center;
+    border-bottom: 4px solid var(--color-secundario);
+    padding: 0.1em;
+    margin-top: 2%;
+    margin-left: 5%;
+}
+
+.envio_container_text {
+    color: var(--color-primario);
+    font-weight: bold;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.timefast_search_container {
+    width: 90%;
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    align-content: center;
+    padding: 0.3em;
+    margin-left: 5%;
+    margin-top: 2%;
+    border: 0.1px solid var(--color-highligh);
+    box-shadow: 1px 4px 9px rgb(150, 146, 146);
+    border-radius: 5px;
+}
+
+.timefasT_search_input {
+    width: 100%;
+    max-width: 20%;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    border-radius: 10px;
+}
+
+#noGuia {
+    width: 100%;
+    max-width: 70%;
+    border: 1px solid var(--color-secundario);
+    border-radius: 5px;
+    padding: 0.3em;
+}
+
+#noGuia::placeholder {
+    color: var(--color-primario);
+    font-size: 1.2em;
+}
+
+.timefast_seacrh_button {
+    width: 100%;
+    max-width: 10%;
+    height: auto;
+    background-color: var(--color-secundario);
+    border: none;
+    padding: 0.3%;
+    border-radius: 5px;
+    color: white;
+    font-size: 1.2em;
+}
+
+.timefast_seacrh_button:hover {
+    cursor: pointer;
+    background-color: #c77736d3;
+}
+
+.timefast_main_container {
+    width: 91%;
+    display: flex;
+    flex-flow: row wrap;
+    flex-grow: 1;
+    flex-shrink: 1;
+    align-items: center;
+    justify-content: space-around;
+    height: auto;
+    margin-left: 5%;
+    margin-top: 2%;
+    box-sizing: border-box;
+    min-height: 200px; 
+    overflow: hidden; 
+}
+.timefast_infor_paquete{
+    width: 100%;
+    padding: 5%;
+}
+.timefast_main_container_text {
+    color: var(--color-text);
+    font-size: 1.6em;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+}
+
+.timefast_main_container_img {
+    width: 30%;
+}
+
+/* Contenedor de información del paquete */
+.lista-elemento {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid var(--color-highligh);
+    box-shadow: 0 2px 4px rgb(201, 199, 199);
+    max-width: 90%;
+    margin-left: 5%;
+    margin-top: 1%;
+    overflow-y: auto; /* Permite el scroll si el contenido es muy grande */
+}
+
+.timefast_title {
+    color: var(--color-text);
+    font-weight: bold;
+    font-size: 1.2em;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.timefast_sutittle {
+    color: var(--color-text);
+    font-size: 0.8em;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.timefast_info_envio {
+    color: var(--color-primario);
+    font-size: 0.9em;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.infor_estatus_envio {
+    width: 90%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 5%;
+    border: 2px solid var(--color-highligh);
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.img {
+    width: 60%; /* Ajusta la imagen dentro del contenedor */
+    margin: 0 auto;
+}
+
+.lista-historial {
+    display: flex;
+    flex-flow: column wrap;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid var(--color-highligh);
+    box-shadow: 0 2px 4px rgb(201, 199, 199);
+    width: 100%;
+    max-width: 90%;
+    max-height: 500px;
+    overflow-y: auto;
+    margin-left: 5%;
+    margin-top: 10px;
+}
+
+.lista-elementoBase {
+    background-color: transparent;
+    padding: 10px;
+    margin: 8px;
+    border-radius: 8px;
+    border: 2px solid var(--color-highligh);
+    box-shadow: 1px 1px 4px var(--color-highligh);
+}
