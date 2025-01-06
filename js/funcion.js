@@ -11,6 +11,13 @@ const tituloHistorialEstatus = document.createElement('h1');
 tituloHistorialEstatus.className="timefast_title"
 tituloHistorialEstatus.innerHTML="Historial de Estatus"
 
+
+const containerPaquetes = document.createElement('div')
+containerPaquetes.className="lista-historial"
+const tituloPaquetes = document.createElement('h1');
+tituloPaquetes.className="timefast_title"
+tituloPaquetes.innerHTML="Paquetes Contenidos"
+
 console.log(btnBusarEnvio);
 console.log(inputEnvio)
 console.log(listaPagos);
@@ -27,9 +34,11 @@ async function obtenerdatosEnvio() {
             const envio = await respuesta.json();            
             console.log(envio)
             mostrarInfoEnvio(envio);
+            const noGuia = envio.noGuia;
             const idEnvio = envio.idEnvio;
-            console.log(`IDENVIO: ${idEnvio}`);
-            obtenerHistorial(idEnvio)
+            console.log(`IDENVIO: ${noGuia}`);
+            obtenerHistorial(noGuia)
+            obtenerPaquetes(noGuia)
         }
     } catch (error) {
         console.error = 'Error en la peticion '+ error;
@@ -37,7 +46,7 @@ async function obtenerdatosEnvio() {
 }
 
 async function obtenerHistorial(idEnvio) {
-    const urlWSBase= `http://localhost:8084/TimeFastWS/timefast/envio/historial-envio/${idEnvio}`    
+    const urlWSBase= `http://localhost:8084/TimeFastWS/timefast/envio/obtener-historial-noGuia/${idEnvio}`    
     containerHistorialStatus.innerHTML=""
     console.log(urlWSBase);
     try {
@@ -59,6 +68,30 @@ async function obtenerHistorial(idEnvio) {
     }
 }
 
+async function obtenerPaquetes(idEnvio) {    
+    const urlWSBase= `http://localhost:8084/TimeFastWS/timefast/paquete/obtener-paquete-envio/${idEnvio}`    
+    console.log(urlWSBase)
+    containerPaquetes.innerHTML=""
+    try {
+        const respuesta = await fetch(urlWSBase,{
+            method:'GET'
+        })
+        if(respuesta.ok){
+            const paquetes = await respuesta.json();       
+            if(paquetes.length>0){
+                const paquetesArray = Array.of(paquetes)     
+                mostrarPaquetes(containerPaquetes,paquetes)
+                paquetesArray.forEach((paquete)=>{
+                    console.log(paquete)
+                })
+            }else{
+            }
+
+        }
+    } catch (error) {
+        console.error = 'Error en la peticion '+ error;
+    }
+}
 function mostrarInfoEnvio(envio) {
     textoEliminar.remove();
     imgEliminar.remove();
@@ -74,7 +107,7 @@ function mostrarInfoEnvio(envio) {
     const nuevoElemento = document.createElement('div');          
     nuevoElemento.className = "lista-elemento";
     nuevoElemento.innerHTML= `
-    <strong class = "timefast_title">Información del Paquete</strong> <br>
+    <strong class = "timefast_title">Información del Envio</strong> <br>
 
     <strong class = "timefast_sutittle">Cliente: </strong> <br>
     <strong class ="timefast_info_envio">${envio.nombreCliente} </strong><br>
@@ -87,9 +120,6 @@ function mostrarInfoEnvio(envio) {
 
     <strong class = "timefast_sutittle">Estatus: </strong> <br>
     <strong class ="timefast_info_envio" id="estatusEnvio">${envio.estatus} </strong><br> 
-
-    <strong class = "timefast_sutittle">Cantidad de Paquetes: </strong> <br>
-    <strong class ="timefast_info_envio">${envio.cantidadPaquetes} </strong><br>    
 
     <strong class = "timefast_sutittle">Domicilio: </strong> <br>
     <strong class ="timefast_info_envio">${calleorigen} </strong><br>
@@ -107,7 +137,7 @@ function mostrarInfoEnvio(envio) {
     
     nuevaImgEstatus.classList="img"
     elementoStatus.className = "infor_estatus_envio"; 
-    if(envio.estatus =="Transito"){
+    if(envio.estatus =="En Transito"){
         nuevaImgEstatus.src= '../img/EnTransito.png';       
     }
     if(envio.estatus =="Cancelado"){
@@ -129,9 +159,28 @@ function mostrarInfoEnvio(envio) {
     listaPagos.appendChild(elementoStatus);
     listaPagos.appendChild(containerHistorialStatus);
     listaPagos.appendChild(nuevoElemento);
+    listaPagos.appendChild(containerPaquetes);
 }
 btnBusarEnvio.addEventListener("click", (e)=>{
-    obtenerdatosEnvio();
+    let noEnvio = inputEnvio.value;
+    if(noEnvio==" " || noEnvio==""){
+        Swal.fire({
+            title: "Error",
+            text: "Campos de búsqueda vacíos",
+            imageUrl: "../../img/Logo.png",
+            imageWidth: 200,
+            imageHeight: 200,
+            color: "#3f6f99",
+            background:"#fff",
+            imageAlt: "Logo TimeFast",
+            customClass:{
+                confirmButton:'btn-timefast',
+                popup:'popup-custom'
+            }
+          });
+    }else{
+        obtenerdatosEnvio();
+    }
 })
 
 function mostrarInfoHistorial(contenedor, historial){
@@ -145,6 +194,35 @@ function mostrarInfoHistorial(contenedor, historial){
 
         <strong class="timefast_sutittle">Fecha de Cambio</strong><br>
         <strong class="timefast_info_envio">${envio.fechaCambio}</strong>    <br>
+        `;
+        contenedor.appendChild(nuevoHistorial);
+    });
+}
+
+function mostrarPaquetes(contenedor, paquetes){
+    contenedor.appendChild(tituloPaquetes)
+    paquetes.forEach(paquete =>{
+        const nuevoHistorial = document.createElement('div')
+        nuevoHistorial.className = "lista-elementoBase";
+        nuevoHistorial.innerHTML= `     
+        <strong class="timefast_sutittle">Descripcion</strong><br>
+        <strong class="timefast_info_envio">${paquete.descripcion}</strong><br>
+        
+        <strong class="timefast_sutittle">N0. de Paquete</strong><br>
+        <strong class="timefast_info_envio">${paquete.noPaquete}</strong><br>
+
+        <strong class="timefast_sutittle">Profundidad</strong><br>
+        <strong class="timefast_info_envio">${paquete.profundidad} cm</strong><br>
+
+
+        <strong class="timefast_sutittle">Alto</strong><br>
+        <strong class="timefast_info_envio">${paquete.alto} cm</strong><br>
+
+        <strong class="timefast_sutittle">Ancho</strong><br>
+        <strong class="timefast_info_envio">${paquete.ancho} cm</strong>    <br>
+
+                <strong class="timefast_sutittle">Peso</strong><br>
+        <strong class="timefast_info_envio">${paquete.peso} kg</strong>    <br>
         `;
         contenedor.appendChild(nuevoHistorial);
     });
